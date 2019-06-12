@@ -1,6 +1,8 @@
 package com.spring.springboot.controller;
 
 
+import com.spring.springboot.service.HelloService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
+    @Autowired
+    HelloService helloService;
+    @RequestMapping("/test")
+    public String testTrans(){
+        String s = helloService.testTrans();
+        System.out.println("controller: "+Thread.currentThread().getName());
+        return null;
+    }
 
     @RequestMapping("/hello")
     public String hello(){
