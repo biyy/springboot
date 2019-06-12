@@ -134,4 +134,19 @@ public class Springboot02AmqpApplicationTests {
     rabbitAdmin.deleteQueue("rabbitAdmin.queue");
     rabbitAdmin.removeBinding(new Binding("rabbitAdmin.queue", DestinationType.QUEUE,"rabbitAdmin.exchange","test",null));
   }
+
+  @Test
+  public void test1(){
+    int i = 111;
+    int b = 13;
+    System.out.println(i%b);
+  }
+  @Test
+  public void test2(){
+    int x = 5;
+    int y = 4;
+    y = x--;
+    System.out.println(y);
+    System.out.println(x);
+  }
 }
