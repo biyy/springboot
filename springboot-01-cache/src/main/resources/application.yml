@@ -13,9 +13,12 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+# 打印mapper包中的sql语句日志
 logging:
   level:
     com:
       spring:
         cache:
           mapper: debug
+# 启动时打印自动配置报告
+debug: true
