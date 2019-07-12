@@ -21,4 +21,4 @@ logging:
         cache:
           mapper: debug
 # 启动时打印自动配置报告
-debug: true
+# debug: true

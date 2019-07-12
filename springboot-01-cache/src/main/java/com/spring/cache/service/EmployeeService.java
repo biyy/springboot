@@ -3,6 +3,7 @@ package com.spring.cache.service;
 import com.spring.cache.bean.Employee;
 import com.spring.cache.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +38,13 @@ public class EmployeeService {
    *
    *      condition：指定符合条件的情况下才缓存；
    *              ,condition = "#id>0"
-   *          condition = "#a0>1"：第一个参数的值》1的时候才进行缓存
+   *          condition = "#a0>1"：第一个参数的值>1的时候才进行缓存
    *
    *      unless:否定缓存；当unless指定的条件为true，方法的返回值就不会被缓存；可以获取到结果进行判断
    *              unless = "#result == null"
    *              unless = "#a0==2":如果第一个参数的值是2，结果不缓存；
    *      sync：是否使用异步模式
+   *        如果为true,则unless不起作用了
    *
    * 原理
    *    1.自动配置类:CacheAutoConfiguration
@@ -86,11 +88,23 @@ public class EmployeeService {
    * @param id id
    * @return Employee
    */
-  @Cacheable(cacheNames = "emp")
+  @Cacheable(value = "emp",key="#id")
   public Employee getById(Integer id){
     System.out.println("EmployeeService: "+Thread.currentThread().getName());
     System.out.println("访问数据库查询"+id+"号员工");
     return employeeMapper.getEmpById(id);
+  }
+
+  /**
+   * @CachePut:保证方法被调用,又希望结果被缓存
+   *
+   * @param employee emp
+   * @return emp
+   */
+  @CachePut(value = "emp",key = "#employee.id")
+  public Employee updateEmp(Employee employee){
+    employeeMapper.updateEmp(employee);
+    return employee;
   }
 
 }
